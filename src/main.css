@@ -1,6 +1,7 @@
 :root {
   --blue: rgb(88, 164, 246);
   --light: #fff;
+  user-select: none;
 }
 
 html,

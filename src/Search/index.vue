@@ -13,6 +13,7 @@ const props = defineProps({
   }
 });
 const cratesData = ref<Crate[]>([]);
+const showCopied = ref(false);
 let timeoutId: number | undefined;
 
 watch(() => props.searchString, async (newSearchString) => {
@@ -57,6 +58,11 @@ const openUrl = (crate: Crate) => {
 
 const copyDependence = (crate: Crate) => {
   utools.copyText(`${crate.id} = "${crate.max_stable_version !== null ? crate.max_stable_version : ""}"`);
+  showCopied.value = true;
+  setTimeout(() => {
+    showCopied.value = false;
+  }, 1500); // 1.5秒后隐藏提示
+
 }
 </script>
 
@@ -73,6 +79,7 @@ const copyDependence = (crate: Crate) => {
         <div class="link-label" @click="openUrl(crate)">🔗</div>
       </span>
     </div>
+    <div v-if="showCopied" class="copied-toast">已复制</div>
   </div>
 </template>
 
@@ -88,7 +95,7 @@ const copyDependence = (crate: Crate) => {
 }
 
 .left-part {
-  width: 80%;
+  width: 70%;
   height: 50px;
 }
 
@@ -134,5 +141,34 @@ const copyDependence = (crate: Crate) => {
   cursor: pointer;
   background-color: #ccc;
   transition: 0.2s ease-in-out;
+}
+
+.copied-toast {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 125, 42, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  white-space: nowrap;
+  animation: fadeOut 1.5s ease-in-out;
+}
+
+/* 淡出动画 */
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 </style>

@@ -1,7 +1,6 @@
 {
   "$schema": "../node_modules/utools-api-types/resource/utools.schema.json",
   "main": "index.html",
-  "preload": "preload/services.js",
   "logo": "logo.png",
   "development": {
     "main": "http://localhost:5173"
